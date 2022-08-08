@@ -3,6 +3,7 @@ package com.xiaochengfu.springbootstudy.controller;
 import com.alibaba.fastjson.JSON;
 import com.xiaochengfu.springbootstudy.model.Person;
 import com.xiaochengfu.springbootstudy.vo.FamilyVO;
+import com.xiaochengfu.springbootstudy.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,5 +36,25 @@ public class FastjsonController extends AbstractController{
     public String hashmapJson(){
         FamilyVO familyVO = new FamilyVO();
         return familyVO.familyMember();
+    }
+
+    /**
+     * 知识点：
+     * 1. 返回的object,响应会自动转为json
+     * 2. 构建成功时的接口格式
+     * @return object
+     */
+    @RequestMapping(value = "/response-ajax-ok",method = RequestMethod.GET)
+    @ResponseBody
+    public Object ajaxOk(){
+        FamilyVO familyVO = new FamilyVO();
+        Object result = familyVO.familyMemberObject();
+        return ResultVO.success(result);
+    }
+
+    @RequestMapping(value = "/response-ajax-fail",method = RequestMethod.GET)
+    @ResponseBody
+    public Object ajaxFail(){
+        return ResultVO.fail();
     }
 }

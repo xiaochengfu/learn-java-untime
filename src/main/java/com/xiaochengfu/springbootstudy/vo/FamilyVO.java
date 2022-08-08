@@ -61,4 +61,21 @@ public class FamilyVO {
         family.setMemberNum(3);
         return JSON.toJSONString(familyMember,familyFilter,propertyFilter);
     }
+
+    public Object familyMemberObject(){
+        HashMap<String, Object> familyMember = new HashMap<>();
+        Family family = new Family();
+        family.setFather("爸爸");
+        family.setMather("妈妈");
+        family.setAddr("中国");
+        family.setId(1L);
+        Person person = new Person();
+        person.setName("hp");
+        person.setSex(Person.MAN);
+        person.setAddr("北京");
+        familyMember.put("family",family);
+        familyMember.put("me",person);
+        family.setMemberNum(3);
+        return familyMember;
+    }
 }

@@ -1,13 +1,9 @@
 package com.xiaochengfu.springbootstudy.controller;
 
-import com.xiaochengfu.springbootstudy.model.Book;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 
 
 @RestController
@@ -26,11 +22,40 @@ public class IndexController {
     /**
      * 知识点：
      * 1. get请求
-     * @return
      */
     @GetMapping("/get")
     public String get(){
         return "method get";
+    }
+
+    /**
+     * 知识点：
+     * 1. PathVariable注解，获取伪静态url中的参数,如：http://localhost:8080/get-params/order/30
+     * @param id id
+     * @param type type
+     * @return
+     */
+    @RequestMapping("/get-params/{type}/{id}")
+    public Object getParams(@PathVariable String id, @PathVariable String type){
+        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("type",type);
+        stringObjectHashMap.put("id",id);
+        return stringObjectHashMap;
+    }
+
+    /**
+     * 知识点：
+     * 1. 注解RequestParam,获取url链接中的参数，如: http://localhost:8080/get-params-more?type=order&id=30
+     * @param type 类型
+     * @param id id
+     * @return object
+     */
+    @RequestMapping("/get-params-more")
+    public Object getParams(@RequestParam(value = "type") String type, @RequestParam(value = "id",required = false) Integer id){
+        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("type",type);
+        stringObjectHashMap.put("id",id);
+        return stringObjectHashMap;
     }
 
     /**
@@ -52,21 +77,5 @@ public class IndexController {
         return str;
     }
 
-    /**
-     * 知识点：
-     * 1. 返回json格式，在类中导入jackson
-     * 2. 类中省略getter/setter,引入依赖lombok, 在类中使用注解 @Getter @Setter 或 @Data,编辑中安装插件 lombok
-     * @return book
-     */
-    @RequestMapping("/json")
-    @ResponseBody
-    public Book json(){
-        Book book = new Book();
-        book.setName("三国演义");
-        book.setAuthor("罗贯中");
-        book.setPrice(30D);
-        book.setCationDate(new Date());
-        return book;
-    }
 
 }

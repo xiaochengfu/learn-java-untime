@@ -13,6 +13,7 @@ public class VolatileTests {
      * 1. volatile 可见性,参考链接：https://blog.csdn.net/xueping_wu/article/details/124541419
      * 2. 线程的使用new Thread().start();
      * 3. 挂起线程的使用,包java.util.concurrent.TimeUnit
+     * 4. System.out.println的方法，内部用到了synchronized
      *
      */
     @Test
@@ -31,7 +32,7 @@ public class VolatileTests {
         ).start();
 
         while (this.num==0){
-            //可以添加打印后，不加volatile确出现了可见性的情况
+            System.out.println("循环内打印的话，在不加volatile的情况下，也会实现可见性，因为打印的底层调用了synchronized...");
         }
         System.out.println("子线程内的内存变量->主内存通知主线程"+this.num);
     }
